@@ -65,7 +65,7 @@
                                 <input type="password" class="form-control" id="password" placeholder="Masukkan password" required>
                             </div>
                             <div class="d-grid gap-2">
-                                <button class="btn" style="background-color: #0C5045; color: white;" type="button">Button</button>
+                                <button class="btn" style="background-color: #0C5045; color: white;" type="button">Login</button>
                             </div>
                         </form>
                         <div style="text-align: right;">

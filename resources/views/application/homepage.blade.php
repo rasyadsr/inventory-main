@@ -2,6 +2,7 @@
 
 @section('content')
 @include('layouts.partials.assets')
+@include('layouts.partials.filter')
 <div class="content">
   <div class="container">
     <h4>
