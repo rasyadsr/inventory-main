@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\AssetController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,6 +18,7 @@ Route::get('/login', function () {
     return view('auth/login');
 });
 
-Route::get('/', function () {
-    return view('application/homepage');
+Route::controller(AssetController::class)->group(function () {
+    Route::get('/', 'index')->name('asset.index');
+    Route::post('/', 'store')->name('asset.store');
 });
