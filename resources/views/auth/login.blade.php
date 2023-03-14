@@ -54,7 +54,7 @@
                                 Login di bawah ini untuk masuk ke akun anda
                             </p>
                         </div>
-                        <form action="" method="post">
+                    <form action="" method="post">
                             @csrf
                             <div class="mb-3">
                                 <label for="email" class="form-label" style="font-weight: bold;">Email</label>
@@ -68,8 +68,9 @@
                                 <button class="btn" style="background-color: #0C5045; color: white;" type="button">Login</button>
                             </div>
                         </form>
-                        <div style="text-align: right;">
+                        <div style="text-align: center" class="mt-2">
                             <a href="" class="" style="text-decoration: none; font-weight: 600; color: #0C5045;">Reset Password</a>
+                            <a href="/register" class="" style="text-decoration: none; font-weight: 600; color: #0C5045;">Register</a>
                         </div>
                     </div>
                 </div>
