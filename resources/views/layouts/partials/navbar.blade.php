@@ -30,13 +30,15 @@
         </button>
         <div class="btn-group" role="group">
           <button id="btnGroupDrop1" type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-            Admin
+            {{ auth()->user()->full_name }}
           </button>
           <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
             <li>
               <button type="button" class="dropdown-item btn btn-sm" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="fa-solid fa-right-from-bracket"></i>
-                Sign out
+                <form action="{{ route('logout') }}" method="post">
+                    @csrf
+                    <button class="btn" type="submit"><i class="fa-solid fa-right-from-bracket d-inline"></i> Logout</button>
+                </form>
               </button>
             </li>
           </ul>

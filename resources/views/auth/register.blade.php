@@ -24,7 +24,7 @@
 </head>
 
 <body>
-    <div class="login">
+    <div class="register">
         <div class="card-img-overlay">
             <div class="card position-absolute top-50 start-50 translate-middle" style="width: 35rem;">
                 <div class="container">
@@ -58,47 +58,74 @@
                             <div class="mb-3 row">
                                 <div class="col">
                                 <label for="recipient-name" class="col-form-label">Nama Depan</label>
-                                <input type="text" class="form-control" id="firstName" name="nama_depan">
+                                <input type="text" class="form-control @error('nama_depan') is-invalid @enderror" id="firstName" name="nama_depan">
+                                @error('nama_depan')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
                                 </div>
                                 <div class="col">
                                 <label for="recipient-name" class="col-form-label">Nama Belakang</label>
-                                <input type="text" class="form-control" id="secondName" name="nama_belakang">
+                                <input type="text" class="form-control @error('nama_belakang') is-invalid @enderror" id="secondName" name="nama_belakang">
+                                @error('nama_belakang')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
                                 </div>
                             </div>
                             <div class="mb-3">
                                 <label for="recipient-name" class="col-form-label">Alamat surel</label>
-                                <input type="text" class="form-control" id="email" name="email">
+                                <input type="text" class="form-control @error('email') is-invalid @enderror" id="email" name="email">
+                                @error('email')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
                             </div>
                             <div class="mb-3">
                                 <label for="recipient-name" class="col-form-label">Jenis kelamin</label>
-                                <input type="text" class="form-control" id="gender" name="gender">
+                                <select name="gender" id="gender" class="form-control @error('gender') is-invalid @enderror">
+                                    <option value="L">Laki - Laki</option>
+                                    <option value="P">Perempuan</option>
+                                </select>
+                                @error('gender')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
                             </div>
                             <div class="mb-3">
                                 <label for="recipient-name" class="col-form-label">Unggah CV/Resume anda</label>
-                                <input type="file" class="form-control" id="resume" name="resume">
+                                <input type="file" class="form-control @error('resume') is-invalid @enderror" id="resume" name="resume">
+                                @error('resume')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
                             </div>
                             <div class="mb-3">
-                                <label for="message-text" class="col-form-label">Ringkasa tentang anda</label>
-                                <textarea class="form-control" id="description" name="description"></textarea>
+                                <label for="message-text" class="col-form-label">Ringkasan tentang anda</label>
+                                <textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description"></textarea>
+                                @error('description')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
                             </div>
                             <div class="form-group mb-3">
                                 <label>Kata Sandi</label>
                                 <div class="input-group mb-3">
-                                <input type="password" class="form-control" aria-label="Username" aria-describedby="basic-addon1" name="password">
+                                <input type="password" class="form-control @error('password') is-invalid @enderror" aria-label="Username" aria-describedby="basic-addon1" name="password">
                                 <span class="input-group-text" id="basic-addon1">
                                     <i class="far fa-eye-slash" aria-hidden="true"></i>
                                 </span>
-                                </div>
+                            </div>
+                            @error('password')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
                             </div>
                             <div class="form-group mb-3">
                                 <label>Konfirmasi kata sandi</label>
                                 <div class="input-group mb-3">
-                                <input type="password" class="form-control" aria-label="Username" aria-describedby="basic-addon1" name="password_confirmation">
+                                <input type="password" class="form-control @error('password_confirmation') is-invalid @enderror" aria-label="Username" aria-describedby="basic-addon1" name="password_confirmation">
                                 <span class="input-group-text" id="basic-addon1">
                                     <i class="far fa-eye-slash" aria-hidden="true"></i>
                                 </span>
-                                </div>
+                                    </div>
                             </div>
+                                @error('password')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
                             <div class="d-grid gap-2">
                                 <button class="btn" style="background-color: #0C5045; color: white;" type="submit">Register</button>
                             </div>

@@ -28,7 +28,23 @@ Route::controller(AuthController::class)->group(function() {
 
     // Logout
     Route::post('/logout', 'logout')->name('logout');
+})->middleware('guest');
+
+Route::middleware(['auth'])->group(function ()
+{
+    // Asset
+    Route::resource('asset', AssetController::class, [
+        'names' => [
+            'index'   => 'asset.index',
+            'store'   => 'asset.store',
+            'update'  => 'asset.update',
+            'destroy' => 'asset.delete'
+        ]
+    ]);
 });
 
-// Asset
-Route::resource('asset', AssetController::class);
+Route::get('/', function()
+{
+    return redirect('/asset');
+});
+
