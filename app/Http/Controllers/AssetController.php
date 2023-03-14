@@ -38,23 +38,18 @@ class AssetController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->all();
+        $data = $request->validate([
+            'nama'   => ['required'],
+            'harga'  => ['required'],
+            'jenis'  => ['required'],
+            'status' => ['required']
+        ]);
 
         try {
             $response = Asset::create($data);
-            
-            return response()->json([
-                'status' => 'success',
-                'data'   => $response,
-                'message' => 'Berhasil menambah data!'
-            ]);
-            
+            return redirect()->route('asset.index')->with('success', "Berhasil menambahkan data!");            
         } catch (\Throwable $th) {
-            return response()->json([
-                'status' => 'failed',
-                'data'   => null,
-                'message' => 'Terjadi kesalahan!'
-            ]);
+            return redirect()->route('asset.index')->with('failed', "Terjadi kesalahan!");  
         }
     }
 
@@ -89,24 +84,18 @@ class AssetController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $data = $request->all();
+        $data = $this->validate($request, [
+            'nama'   => ['required'],
+            'harga'  => ['required'],
+            'jenis'  => ['required'],
+            'status' => ['required']
+        ]);
         
         try {
             $response = Asset::where('id', $id)->update($data);
-    
-            return response()->json([
-                'status' => 'success',
-                'data'   => $response,
-                'message' => 'Berhasil merubah data!'
-            ]);
-            
+            return redirect()->route('asset.index')->with('success', "Berhasil merubah data!"); 
         } catch (\Throwable $th) {
-
-            return response()->json([
-                'status' => 'failed',
-                'data'   => null,
-                'message' => 'Terjadi kesalahan!'
-            ]);
+            return redirect()->route('asset.index')->with('failed', "Terjadi kesalahan!");  
         }
     }
 
@@ -118,6 +107,11 @@ class AssetController extends Controller
      */
     public function destroy($id)
     {
-        
+        try {
+            Asset::destroy($id);
+            return redirect()->route('asset.index')->with('success', "Berhasil menghapus data!"); 
+        } catch (\Throwable $th) {
+            return redirect()->route('asset.index')->with('failed', "Terjadi kesalahan!"); 
+        }
     }
 }
