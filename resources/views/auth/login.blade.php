@@ -54,22 +54,32 @@
                                 Login di bawah ini untuk masuk ke akun anda
                             </p>
                         </div>
-                        <form action="" method="post">
+                        @if (session('status'))
+                            <div class="alert alert-success">
+                                {{ session('status') }}
+                            </div>
+                        @endif
+                        @error('credentials')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
+                    <form action="/login" method="post">
                             @csrf
                             <div class="mb-3">
                                 <label for="email" class="form-label" style="font-weight: bold;">Email</label>
-                                <input type="email" class="form-control" id="email" placeholder="Masukkan email" required>
+                                <input type="email" class="form-control" id="email" placeholder="Masukkan email" required name="email">
                             </div>
                             <div class="mb-3">
                                 <label for="password" class="form-label" style="font-weight: bold;">Password</label>
-                                <input type="password" class="form-control" id="password" placeholder="Masukkan password" required>
+                                <input type="password" class="form-control" id="password" placeholder="Masukkan password" required name="password">
                             </div>
                             <div class="d-grid gap-2">
-                                <button class="btn" style="background-color: #0C5045; color: white;" type="button">Login</button>
+                                <button class="btn" style="background-color: #0C5045; color: white;" type="submit">Login</button>
                             </div>
                         </form>
-                        <div style="text-align: right;">
+                        <div style="text-align: center" class="mt-2">
                             <a href="" class="" style="text-decoration: none; font-weight: 600; color: #0C5045;">Reset Password</a>
+                            <br>
+                            <a href="/register" class="" style="text-decoration: none; font-weight: 600; color: #0C5045;">Belum mempunyai akun? Daftar</a>
                         </div>
                     </div>
                 </div>

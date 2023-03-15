@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AssetController;
+use App\Http\Controllers\AuthController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,11 +16,35 @@ use App\Http\Controllers\AssetController;
 |
 */
 
-Route::get('/login', function () {
-    return view('auth/login');
+// Authentication
+Route::controller(AuthController::class)->group(function() {
+    // Login
+    Route::get('/login', 'login')->name('login');
+    Route::post('/login', 'loginStore');
+
+    // Register
+    Route::get('/register', 'register')->name('register');
+    Route::post('/register', 'registerStore');
+
+    // Logout
+    Route::post('/logout', 'logout')->name('logout');
+})->middleware('guest');
+
+Route::middleware(['auth'])->group(function ()
+{
+    // Asset
+    Route::resource('asset', AssetController::class, [
+        'names' => [
+            'index'   => 'asset.index',
+            'store'   => 'asset.store',
+            'update'  => 'asset.update',
+            'destroy' => 'asset.delete'
+        ]
+    ]);
 });
 
-Route::controller(AssetController::class)->group(function () {
-    Route::get('/', 'index')->name('asset.index');
-    Route::post('/', 'store')->name('asset.store');
+Route::get('/', function()
+{
+    return redirect('/asset');
 });
+

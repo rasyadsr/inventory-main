@@ -67,9 +67,13 @@
             <button type="button" class="btn btn-sm" style="background-color: #0C5045;" onClick="edit(this)" data-id="{{ $asset-> id}}" data-nama="{{ $asset->nama }}" data-jenis="{{ $asset->jenis }}" data-harga="{{ $asset->harga }}" data-status="{{ $asset->status }}">
               <i class="fa-sharp fa-solid fa-pencil" style="color: white;"></i>
             </button>
-            <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="">
-              <i class="fa-sharp fa-solid fa-trash-can" style="color: white;"></i>
-            </button>
+            <form action="{{ route('asset.delete', [$asset->id])}}" method="post" class="d-inline">
+              @method('delete')
+              @csrf
+              <button class="btn btn-sm btn-danger" data-bs-toggle="modal" onclick="return confirm('Yakin ingin menghapus data ini?');" data-bs-target="">
+                <i class="fa-sharp fa-solid fa-trash-can" style="color: white;"></i>
+              </button>
+            </form>
           </td>
         </tr>
         @endforeach
@@ -89,31 +93,42 @@
         </div>
         <form action="{{ route('asset.store') }}" method="POST" id="form-aset">
           <div class="modal-body">
-
             @csrf
             <input type="hidden" name="id" id="input-id-asset">
             <div class="form-group mb-3">
               <label for="nama-asset">Nama Aset</label>
-              <input type="text" class="form-control" id="input-nama-asset" placeholder="Masukan Nama Aset" name="nama">
+              <input type="text" class="form-control @error('nama') is-invalid @enderror" id="input-nama-asset" placeholder="Masukan Nama Aset" name="nama">
+              @error('name')
+                  <small class="text-danger">{{ $message }}</small>
+              @enderror
             </div>
             <div class="form-group mb-3">
               <label for="jenis-asset">Jenis Aset</label>
-              <select class="form-select" id="input-jenis-asset" name="jenis">
+              <select class="form-select @error('jenis') is-invalid @enderror" id="input-jenis-asset" name="jenis">
                 <option selected style="color: grey;">Pilih jenis aset</option>
                 <option value="Fixed Aset">Fixed Aset</option>
               </select>
+              @error('jenis')
+                  <small class="text-danger">{{ $message }}</small>
+              @enderror
             </div>
             <div class="form-group mb-3">
               <label for="harga-asset">Harga Satuan</label>
-              <input type="text" class="form-control" id="input-harga-asset" placeholder="Masukkan harga" name="harga">
+              <input type="text" class="form-control @error('harga') is-invalid @enderror" id="input-harga-asset" placeholder="Masukkan harga" name="harga">
+              @error('harga')
+                  <small class="text-danger">{{ $message }}</small>
+              @enderror
             </div>
             <div class="form-group mb-3">
               <label for="status-asset" class="col-form-label">Status Aset</label>
-              <select class="form-select" id="input-status-asset" name="status">
+              <select class="form-select @error('status') is-invalid @enderror" id="input-status-asset" name="status">
                 <option selected style="color: grey;" disabled>Pilih status</option>
                 <option value="1">Aktif</option>
                 <option value="0">Tidak Aktif</option>
               </select>
+              @error('status')
+                  <small class="text-danger">{{ $message }}</small>
+              @enderror
             </div>
           </div>
           <div class="modal-footer d-flex justify-content-left">
@@ -130,6 +145,8 @@
   const modalForm = $('#tambahAssets');
 
   function create() {
+    $('#form-aset').attr('action', "{{ route('asset.store') }}");
+    $('[name="_method"]').remove();
     $('#modal-title').text('Tambah Aset');
     $('#input-id-asset').val("");
     $('#input-nama-asset').val("");
@@ -160,7 +177,10 @@
     $('#input-jenis-asset').val(jenis);
     $('#input-harga-asset').val(harga);
     $("#input-status-asset").val(status).change();
+    $('#form-aset').attr('action', `/asset/${id}`);
+    $('#form-aset').prepend('{{ method_field("PUT") }}')
     modalForm.modal('show');
   }
+  
 </script>
 @endsection
